@@ -92,6 +92,8 @@ const byte subnet[] = { 255, 255, 255, 0 }; //ip adress
     #define ZsensorBME280
     #include "config_BME280.h"
   #endif
+  #define ZgatewayRF315
+  #include "config_RF315.h"
 #else // for arduino + W5100
   #define ZgatewayRF
   #include "config_RF.h"
