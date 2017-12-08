@@ -179,7 +179,9 @@ void setup()
   #ifdef ZgatewayRFM69
     setupRFM69();
   #endif
-
+  #ifdef ZgatewayRF315
+    setupRF315();
+  #endif
 }
 
 #ifdef ESP8266
@@ -264,6 +266,10 @@ void loop()
       boolean resultRFM69 = RFM69toMQTT();
       if(resultRFM69)
       trc(F("RFM69toMQTT OK"));
+    #endif
+     #ifdef ZgatewayRF315
+      if(RF315toMQTT())
+      trc(F("RF315toMQTT OK"));
     #endif
   }
 
