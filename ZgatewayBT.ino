@@ -64,14 +64,16 @@ boolean BTtoMQTT() {
         for (int i=0;i<(int)device_number;i++){
              String onedevice = discResult.substring(0,78);
              onedevice.replace(STRING_MSG,"");
-             /*String company = onedevice.substring(0,8);
-             String uuid = onedevice.substring(9,41);
-             String others = onedevice.substring(42,52);*/
+             String uuid = onedevice.substring(9,21);
              String mac = onedevice.substring(53,65);
              String rssi = onedevice.substring(66,70);
-             String mactopic = subjectBTtoMQTT + mac;
-             trc(mactopic + " " + rssi);
-             client.publish((char *)mactopic.c_str(),(char *)rssi.c_str());
+             //String mactopic = subjectBTtoMQTT + mac;
+             float distance = (0.89976)*pow((rssi.toInt() / -70.0), 7.7095) + 0.111;
+             //int distance = (int)((0.89976)*pow((rssi.toInt() / -70.0), 7.7095) + 0.111);
+             String uuidjson = "{ \"id\": \"" + uuid + "\", \"name\": \"" + mac + "\", \"distance\": \"" + String(distance) + "\" }";
+             //trc(mactopic + " " + rssi);
+             //client.publish((char *)mactopic.c_str(),(char *)rssi.c_str());
+             client.publish(subjectBTtoMQTTRoom,(char *)uuidjson.c_str());
              discResult = discResult.substring(78);
              #ifdef ESP8266
               yield();
